@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, Form} from "react-bootstrap";
 
-function ModalLogin() {
+function ModalLogin({show, onHide, hereRegister}) {
     return(
-        <Modal show={false}>
+        <Modal show={show} onHide={onHide}>  
             <Modal.Body className='modalLoginBody'>
                 <Modal.Title className='modalLoginTitle'>Login</Modal.Title>
                 <Form className='modalLoginForm'>
@@ -18,7 +18,7 @@ function ModalLogin() {
                     <div className='modalLoginButton' type="submit">Login</div>
 
                     <div style={{textAlign:'center', fontWeight:'500'}}>Don't have an account ? klik
-                    <button className='modalLoginButtonHere'>Here</button>
+                    <button className='modalLoginButtonHere' onClick={hereRegister}>Here</button>
                     </div>
                 </Form>
             </Modal.Body>
