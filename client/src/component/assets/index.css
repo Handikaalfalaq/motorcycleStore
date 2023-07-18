@@ -130,7 +130,7 @@
 .logoPlus{
     width: 40px;
     color: white;
-    background-color: green;
+    background-color: #fe6600;
     border-radius: 10px 0px 0px 10px;
     font-size: 30px;
     font-weight: bold;
@@ -143,7 +143,7 @@
 .plusProduck{
     font-size: 15px;
     color: white;
-    background-color: green;
+    background-color: #fe6600;
     border-radius: 0px 10px 10px 0px;
     padding: 5px 10px 5px 0px;
     font-weight: bold;
