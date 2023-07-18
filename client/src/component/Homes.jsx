@@ -1,9 +1,33 @@
-import React from 'react';
+import {React, useState } from 'react';
 import { Card } from "react-bootstrap";
 import FolderImg from "../component/assets/img/folderImg"
 import "../component/assets/index.css";
+import UpdateProduck from './updateProduck'
+// import Swal from 'sweetalert2';
 
 function Homes() {
+  const [showUpdateProduck, setShowUpdateProduck] = useState(false);
+  const handleOpenUpdateProduck = () => setShowUpdateProduck(true);
+
+  const handleDelete = () => {
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     Swal.fire(
+    //       'Deleted!',
+    //       'Your file has been deleted.',
+    //       'success'
+    //     )
+    //   }
+    // });
+  }
   return (
     <div className='containerCard'>
       <Card className="cardHome">
@@ -24,8 +48,9 @@ function Homes() {
           
           <Card.Text>Stok : 5 kendaraan</Card.Text>
           <div className='action'>
-            <div className='update'>Update</div>
-            <div className='delete'>Delete</div>
+          <div className='update' onClick={handleOpenUpdateProduck} >Update</div>
+            <UpdateProduck show={showUpdateProduck} onHide={()=> setShowUpdateProduck(false)}/>
+            <div className='delete' onClick={handleDelete}>Delete</div>
           </div>
         </Card.Body>
       </Card>
@@ -48,8 +73,9 @@ function Homes() {
           
           <Card.Text>Stok : 5 kendaraan</Card.Text>
           <div className='action'>
-            <div className='update'>Update</div>
-            <div className='delete'>Delete</div>
+          <div className='update' onClick={handleOpenUpdateProduck} >Update</div>
+            <UpdateProduck show={showUpdateProduck} onHide={()=> setShowUpdateProduck(false)}/>
+            <div className='delete' onClick={handleDelete}>Delete</div>
           </div>
         </Card.Body>
       </Card>
@@ -72,8 +98,9 @@ function Homes() {
           
           <Card.Text>Stok : 5 kendaraan</Card.Text>
           <div className='action'>
-            <div className='update'>Update</div>
-            <div className='delete'>Delete</div>
+          <div className='update' onClick={handleOpenUpdateProduck} >Update</div>
+            <UpdateProduck show={showUpdateProduck} onHide={()=> setShowUpdateProduck(false)}/>
+            <div className='delete' onClick={handleDelete}>Delete</div>
           </div>
         </Card.Body>
       </Card>
@@ -96,8 +123,9 @@ function Homes() {
           
           <Card.Text>Stok : 5 kendaraan</Card.Text>
           <div className='action'>
-            <div className='update'>Update</div>
-            <div className='delete'>Delete</div>
+            <div className='update' onClick={handleOpenUpdateProduck} >Update</div>
+            <UpdateProduck show={showUpdateProduck} onHide={()=> setShowUpdateProduck(false)}/>
+            <div className='delete' onClick={handleDelete}>Delete</div>
           </div>
         </Card.Body>
       </Card>

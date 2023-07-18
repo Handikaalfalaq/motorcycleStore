@@ -121,6 +121,38 @@
     font-weight: 500;
 }
 
+.buttonPlusProduck{
+    display: flex;
+    height: 40px;
+    cursor: pointer;
+}
+
+.logoPlus{
+    width: 40px;
+    color: white;
+    background-color: green;
+    border-radius: 10px 0px 0px 10px;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.plusProduck{
+    font-size: 15px;
+    color: white;
+    background-color: green;
+    border-radius: 0px 10px 10px 0px;
+    padding: 5px 10px 5px 0px;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
 .login, .register {
     color: white;
     margin: 10px;
