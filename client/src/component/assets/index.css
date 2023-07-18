@@ -1,0 +1,153 @@
+/* ----------------------------------------Homes---------------------------------------- */
+.containerCard {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-around;
+    grid-gap: 10px;
+}  
+
+.cardHome {
+    border: 3px solid #fe6600;
+    width: 400px;
+    padding: 15px 10px 0px;
+}
+
+.imageProduck {
+    margin: auto;
+    Width:300px;
+    Height: 270px;
+    background-size: cover;
+    background-position: center center;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoPurchasePrice {
+    color:red
+}
+
+.infoSellingPrice {
+    color:green
+}
+
+.action {
+    display: flex;
+    justify-content: space-around;
+}
+
+.update, .delete {
+    border: 3px solid #fe6600;
+    background-color: #fe6600;
+    color:white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.update:hover, .delete:hover{
+    border: 3px solid #fe6600;
+    background-color: white;
+    color:#fe6600;
+}
+
+/* ----------------------------------------Modal Login / register---------------------------------------- */
+.modalLoginBody, .modalRegisterBody {
+    width: 416px;
+    height: auto;
+    margin: auto;
+}
+
+.modalLoginTitle, .modalRegisterTitle {
+    font-size: 36px; 
+    text-align: center;
+    font-weight: bold;
+    color: #fe6600;
+}
+
+.modalLoginForm, .modalLoginForm{
+    width: 416px;
+    margin:auto;
+}
+
+.modalLoginControl, .modalRegisterControl{
+    height: 60px;
+    width: 90%; 
+    margin-top: 30px;
+}
+
+.modalLoginButton, .modalRegisterButton {
+    height: 60px;
+    width: 90%;
+    background-color: #fe6600;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+
+.modalLoginButtonHere, .modalRegisterButtonHere {
+    border:0px; 
+    background-color:transparent; 
+    font-weight:bold; 
+    margin-top: 10px
+}
+
+/* ----------------------------------------Navbar---------------------------------------- */
+.logoNavbar {
+    height: 40px;
+}
+
+.buttonSearch {
+    border: 2px solid #fe6600;
+    color: white;
+    background-color: #fe6600;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.buttonSearch:hover{
+    color: #fe6600;
+    background-color: white;
+    font-weight: 500;
+}
+
+.login, .register {
+    color: white;
+    margin: 10px;
+    border: 2px solid #fe6600;
+    background-color: #fe6600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.login:hover {
+    border: 2px solid #fe6600;
+    color: #fe6600;
+    background-color: white;
+}
+
+.register {
+    border: 2px solid #fe6600;
+    color: #fe6600;
+    background-color: white;
+}
+
+.register:hover{
+    color: white;
+    border: 2px solid #fe6600;
+    background-color: #fe6600;
+}
+
+
