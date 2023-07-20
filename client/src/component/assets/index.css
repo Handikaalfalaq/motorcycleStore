@@ -13,7 +13,7 @@
     padding: 15px 10px 0px;
 }
 
-.imageProduck {
+.imageProduct {
     margin: auto;
     Width:300px;
     Height: 270px;
@@ -121,7 +121,7 @@
     font-weight: 500;
 }
 
-.buttonPlusProduck{
+.buttonPlusProduct{
     display: flex;
     height: 40px;
     cursor: pointer;
@@ -140,7 +140,7 @@
     justify-content: center;
 }
 
-.plusProduck{
+.plusProduct{
     font-size: 15px;
     color: white;
     background-color: #fe6600;

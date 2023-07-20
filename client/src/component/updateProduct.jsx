@@ -1,11 +1,11 @@
 import React from 'react';
 import { Modal, Form} from "react-bootstrap";
 
-function NewProduck({show, onHide}) {
+function UpdateProduct({show, onHide}) {
     return(
         <Modal show={show} onHide={onHide}>  
             <Modal.Body className='modalLoginBody'>
-                <Modal.Title className='modalLoginTitle'>Tambah Produck</Modal.Title>
+                <Modal.Title className='modalLoginTitle'>Update Product</Modal.Title>
                 <Form className='modalLoginForm'>
                     <Form.Group className="mb-3" >
                     <Form.Control className='modalLoginControl' name="namaMotor" type="text" placeholder="Nama Motor" />
@@ -27,11 +27,11 @@ function NewProduck({show, onHide}) {
                       <Form.Control className='modalLoginControl' name="stokMotor" type="text" placeholder="Stok Motor" />
                     </Form.Group>
 
-                    <div className='modalLoginButton' type="submit">Tambah Produck</div>
+                    <div className='modalLoginButton' type="submit">Update Product</div>
                 </Form>
             </Modal.Body>
         </Modal>
     )
 }
 
-export default NewProduck
+export default UpdateProduct

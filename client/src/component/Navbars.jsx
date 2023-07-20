@@ -5,16 +5,16 @@ import "../component/assets/index.css";
 import FolderImg from "../component/assets/img/folderImg"
 import ModalLogin from './auth/ModalLogin'
 import ModalRegister from './auth/ModalRegister'
-import NewProduck from './newProduck'
+import NewProduct from './newProduct'
 
 function Navbars() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showNewProduck, setShowNewProduck] = useState(false);
+  const [showNewProduct, setShowNewProduct] = useState(false);
   
   const handleOpenLogin = () => setShowLogin(true);
   const handleOpenRegister = () => setShowRegister(true);
-  const handleOpenNewProduck = () => setShowNewProduck(true);
+  const handleOpenNewProduct = () => setShowNewProduct(true);
 
   const hereLogin = (e) => {
     e.preventDefault();
@@ -41,9 +41,9 @@ function Navbars() {
             </Form>
           </Nav>
 
-          <nav className="buttonPlusProduck me-auto" onClick={handleOpenNewProduck}>
+          <nav className="buttonPlusProduct me-auto" onClick={handleOpenNewProduct}>
               <div className="logoPlus"> + </div>
-              <div className="plusProduck">Tambah Produck</div>
+              <div className="plusProduct">Tambah Product</div>
           </nav>
           
           <div className='login' onClick={handleOpenLogin}>Login</div>
@@ -52,7 +52,7 @@ function Navbars() {
 
         <ModalLogin show={showLogin} onHide={()=> setShowLogin(false)} hereRegister={hereRegister} />
         <ModalRegister show={showRegister} onHide={()=> setShowRegister(false)} hereLogin={hereLogin}/>
-        <NewProduck show={showNewProduck} onHide={()=> setShowNewProduck(false)}/>
+        <NewProduct show={showNewProduct} onHide={()=> setShowNewProduct(false)}/>
       </Container>
       
     </Navbar>
