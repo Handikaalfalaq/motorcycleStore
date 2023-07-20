@@ -1,13 +1,34 @@
-import {React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Card } from "react-bootstrap";
-import FolderImg from "../component/assets/img/folderImg"
 import "../component/assets/index.css";
-import UpdateProduct from './updateProduct'
+import UpdateProduct from './updateProduct';
 import Swal from 'sweetalert2';
+import { API } from '../config/Api';
 
 function Homes() {
   const [showUpdateProduct, setShowUpdateProduct] = useState(false);
-  const handleOpenUpdateProduct = () => setShowUpdateProduct(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataAllProduct, setDataAllProduct] = useState([]);
+
+  const handleOpenUpdateProduct = (index) => {
+    console.log("Clicked Update for index:", index);
+    setShowUpdateProduct(true);
+  };
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await API.get(`/products`);
+        setDataAllProduct(response.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleDelete = () => {
     Swal.fire({
@@ -27,108 +48,42 @@ function Homes() {
         )
       }
     });
-  }
+  };
+
   return (
     <div className='containerCard'>
-      <Card className="cardHome">
-        <div className='imageProduct' style={{backgroundImage: `url(${FolderImg.KtmDuke})`}}></div>
-        <Card.Body>
-          <Card.Title>Motor KTM DUKE</Card.Title>
-          <Card.Text>Informasi Kendaraan</Card.Text>
-            <div className="transaction">
-              <Card.Text>
-                <div className="infoPurchasePrice">Harga Beli</div>
-                <div className="purchasePrice">Rp. 56 jt</div>
-              </Card.Text>
-              <Card.Text>
-                <div className="infoSellingPrice">Harga Jual</div>
-                <div className="sellingPrice">Rp. 56 jt</div>
-              </Card.Text>
-            </div>
-          
-          <Card.Text>Stok : 5 kendaraan</Card.Text>
-          <div className='action'>
-          <div className='update' onClick={handleOpenUpdateProduct} >Update</div>
-            <UpdateProduct show={showUpdateProduct} onHide={()=> setShowUpdateProduct(false)}/>
-            <div className='delete' onClick={handleDelete}>Delete</div>
-          </div>
-        </Card.Body>
-      </Card>
-
-      <Card className="cardHome">
-        <div className='imageProduct' style={{backgroundImage: `url(${FolderImg.KtmXCFW})`}}></div>
-        <Card.Body>
-          <Card.Title>Motor KTM 300 EXC TPI</Card.Title>
-          <Card.Text>Informasi Kendaraan</Card.Text>
-            <div className="transaction">
-              <Card.Text>
-                <div className="infoPurchasePrice">Harga Beli</div>
-                <div className="purchasePrice">Rp. 150 jt</div>
-              </Card.Text>
-              <Card.Text>
-                <div className="infoSellingPrice">Harga Jual</div>
-                <div className="sellingPrice">Rp. 165 jt</div>
-              </Card.Text>
-            </div>
-          
-          <Card.Text>Stok : 5 kendaraan</Card.Text>
-          <div className='action'>
-          <div className='update' onClick={handleOpenUpdateProduct} >Update</div>
-            <UpdateProduct show={showUpdateProduct} onHide={()=> setShowUpdateProduct(false)}/>
-            <div className='delete' onClick={handleDelete}>Delete</div>
-          </div>
-        </Card.Body>
-      </Card>
-
-      <Card className="cardHome">
-        <div className='imageProduct' style={{backgroundImage: `url(${FolderImg.KtmRc390})`}}></div>
-        <Card.Body>
-          <Card.Title>Motor KTM RC 390</Card.Title>
-          <Card.Text>Informasi Kendaraan</Card.Text>
-            <div className="transaction">
-              <Card.Text>
-                <div className="infoPurchasePrice">Harga Beli</div>
-                <div className="purchasePrice">Rp. 55 jt</div>
-              </Card.Text>
-              <Card.Text>
-                <div className="infoSellingPrice">Harga Jual</div>
-                <div className="sellingPrice">Rp. 60 jt</div>
-              </Card.Text>
-            </div>
-          
-          <Card.Text>Stok : 5 kendaraan</Card.Text>
-          <div className='action'>
-          <div className='update' onClick={handleOpenUpdateProduct} >Update</div>
-            <UpdateProduct show={showUpdateProduct} onHide={()=> setShowUpdateProduct(false)}/>
-            <div className='delete' onClick={handleDelete}>Delete</div>
-          </div>
-        </Card.Body>
-      </Card>
-
-      <Card className="cardHome">
-        <div className='imageProduct' style={{backgroundImage: `url(${FolderImg.KtmAdventureRally})`}}></div>
-        <Card.Body>
-          <Card.Title>Motor KTM RC 390</Card.Title>
-          <Card.Text>Informasi Kendaraan</Card.Text>
-            <div className="transaction">
-              <Card.Text>
-                <div className="infoPurchasePrice">Harga Beli</div>
-                <div className="purchasePrice">Rp. 267 jt</div>
-              </Card.Text>
-              <Card.Text>
-                <div className="infoSellingPrice">Harga Jual</div>
-                <div className="sellingPrice">Rp. 330 jt</div>
-              </Card.Text>
-            </div>
-          
-          <Card.Text>Stok : 5 kendaraan</Card.Text>
-          <div className='action'>
-            <div className='update' onClick={handleOpenUpdateProduct} >Update</div>
-            <UpdateProduct show={showUpdateProduct} onHide={()=> setShowUpdateProduct(false)}/>
-            <div className='delete' onClick={handleDelete}>Delete</div>
-          </div>
-        </Card.Body>
-      </Card>
+      {isLoading ? (
+        <div></div>
+      ) : (
+        dataAllProduct.length > 0 ? (
+          dataAllProduct.map((item, index) => (
+            <Card className="cardHome" key={index}>
+              <div className='imageProduct' style={{backgroundImage: `url(${item.image})`}}></div>
+              <Card.Body>
+                <Card.Title>{item.namaMotor}</Card.Title>
+                <div className="transaction">
+                  <Card.Text>
+                    <div className="infoPurchasePrice">Harga Beli</div>
+                    <div className="purchasePrice">Rp. {item.hargaBeli}</div>
+                  </Card.Text>
+                  <Card.Text>
+                    <div className="infoSellingPrice">Harga Jual</div>
+                    <div className="sellingPrice">Rp. {item.hargaJual}</div>
+                  </Card.Text>
+                </div>
+                <Card.Text>Stok : {item.stok} kendaraan</Card.Text>
+                <div className='action'>
+                  <div className='update' onClick={() => handleOpenUpdateProduct(index)}>Update</div>
+                  <UpdateProduct show={showUpdateProduct} onHide={() => setShowUpdateProduct(false)} selectedIndex={index}/>
+                  <div className='delete' onClick={handleDelete}>Delete</div>
+                </div>
+              </Card.Body>
+            </Card>
+          ))
+        ) : (
+          <div>No products found.</div>
+        )
+      )}
     </div>
   );
 }
