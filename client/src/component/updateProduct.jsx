@@ -2,11 +2,9 @@ import {React, useState, useEffect} from 'react';
 import { Modal, Form} from "react-bootstrap";
 import { useMutation } from 'react-query';
 import { API } from '../config/Api';
+import Swal from 'sweetalert2';
 
-function UpdateProduct({show, onHide, selectedIndex }) {
-  
-  console.log("idnya", selectedIndex )
-  
+function UpdateProduct({show, onHide, idProduct }) {
   const [formUpdateProduct, setFormUpdateProduct] = useState({
       namaMotor: '',
       hargaBeli: '',
@@ -15,28 +13,28 @@ function UpdateProduct({show, onHide, selectedIndex }) {
       image: '',
     })
 
-
     useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await API.get(`/product/${selectedIndex}`);
-          const dataProductById = response.data.data;
-          setFormUpdateProduct(
-            {
+      if (idProduct) {
+        const fetchData = async () => {
+          try {
+            const response = await API.get(`/product/${idProduct}`);
+            const dataProductById = response.data.data;
+            setFormUpdateProduct({
               namaMotor: dataProductById.namaMotor,
               hargaBeli: dataProductById.hargaBeli,
               hargaJual: dataProductById.hargaJual,
               stok: dataProductById.stok,
               image: dataProductById.image,
-            }
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      };
-  
-      fetchData();
-    }, [selectedIndex ]);
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        fetchData();
+      }
+    }, [idProduct]);
+    
 
     const handleChange = (e) => {
       setFormUpdateProduct({
@@ -46,58 +44,101 @@ function UpdateProduct({show, onHide, selectedIndex }) {
         })
       };
 
-    const handleSubmit = useMutation(async (e) => {
-      try {
-        e.preventDefault();
+      const handleSubmit = useMutation(async (e) => {
+        try {
+          e.preventDefault();
+    
+          const config = {
+            headers: {
+              'Content-type': 'multipart/form-data',
+            },
+          };
+    
+          const formData = new FormData();
+          formData.set('namaMotor', formUpdateProduct.namaMotor);
+          formData.set('hargaBeli', formUpdateProduct.hargaBeli);
+          formData.set('hargaJual', formUpdateProduct.hargaJual);
+          formData.set('stok', formUpdateProduct.stok);
+          formData.append('image', formUpdateProduct.image[0], formUpdateProduct.image[0].name);
+    
+          Swal.showLoading();
+    
+          const response = await API.patch(`/product/${idProduct}`, formData, config);
+          console.log("add product success : ", response);
+          console.log("data : ", formData);
+          
+          Swal.hideLoading();
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Berhasil Update Data Product',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            window.location.reload();
+          });
+    
+        } catch (error) {
+          console.log("add product failed : ", error);
+        }
+      });
 
-        const config = {
-          headers: {
-            'Content-type': 'multipart/form-data',
-          },
-        };
+    // const handleSubmit = useMutation(async (e) => {
+    //   try {
+    //     console.log("berhasil")
+    //     e.preventDefault();
 
-        const formData = new FormData();
-        formData.set('namaMotor', formUpdateProduct.namaMotor);
-        formData.set('hargaBeli', formUpdateProduct.hargaBeli);
-        formData.set('hargaJual', formUpdateProduct.hargaJual);
-        formData.set('stok', formUpdateProduct.stok);
-        formData.append('image', formUpdateProduct.image[0], formUpdateProduct.image[0].name);
+    //     const config = {
+    //       headers: {
+    //         'Content-type': 'multipart/form-data',
+    //       },
+    //     };
+
+    //     const formData = new FormData();
+    //     formData.set('namaMotor', formUpdateProduct.namaMotor);
+    //     formData.set('hargaBeli', formUpdateProduct.hargaBeli);
+    //     formData.set('hargaJual', formUpdateProduct.hargaJual);
+    //     formData.set('stok', formUpdateProduct.stok);
+    //     formData.append('image', formUpdateProduct.image[0], formUpdateProduct.image[0].name);
         
-        const response = await API.patch(`/product/${selectedIndex }`, formData, config);
-        console.log("add product success : ", response);
-        console.log("data : ", formData);
+    //     const response = await API.patch(`/product/${idProduct}`, formData, config);
+    //     console.log("add product success : ", response);
+    //     console.log("data : ", formData);
   
-      } catch (error) { 
-        console.log("add product failed : ", error);
-      }
-    });
+    //   } catch (error) { 
+    //     console.log("gagal")
+    //     console.log("add product failed : ", error);
+    //   }
+    // });
+
+
     return(
         <Modal show={show} onHide={onHide}>  
-            <Modal.Body className='modalLoginBody'>
-                <Modal.Title className='modalLoginTitle'>Update Product</Modal.Title>
-                <Form className='modalLoginForm' onSubmit={(e) => handleSubmit.mutate(e)}>
+            <Modal.Body className='modalUpdateProductBody'>
+                <Modal.Title className='modalUpdateProductTitle'>Update Product</Modal.Title>
+                <Form className='modalUpdateProductForm' onSubmit={(e) => handleSubmit.mutate(e)}>
                     <Form.Group className="mb-3" >
-                    <Form.Control className='modalLoginControl' value={formUpdateProduct.namaMotor} name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" />
+                    <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.namaMotor} name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
-                      <Form.Control className='modalLoginControl' value={formUpdateProduct.hargaBeli} name="hargaBeli" onChange={handleChange} type="text" placeholder="Harga Beli" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaBeli} name="hargaBeli" onChange={handleChange} type="text" placeholder="Harga Beli" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
-                      <Form.Control className='modalLoginControl' value={formUpdateProduct.hargaJual} name="hargaJual" onChange={handleChange} type="text" placeholder="Harga Jual" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaJual} name="hargaJual" onChange={handleChange} type="text" placeholder="Harga Jual" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
-                      <Form.Control className='modalLoginControl' value={formUpdateProduct.stok} name="stok" onChange={handleChange} type="text" placeholder="Stok Motor" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.stok} name="stok" onChange={handleChange} type="text" placeholder="Stok Motor" />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                       <label>Pilih image</label>
-                      <Form.Control className='modalLoginControl' name="image" onChange={handleChange} type="file" />
+                      <Form.Control className='modalUpdateProductControl' name="image" onChange={handleChange} type="file" />
                     </Form.Group>
 
-                    <div className='modalLoginButton' type="submit">Update Product</div>
+                    <button className='modalUpdateProductButton' type="submit">Update Product</button>
                 </Form>
             </Modal.Body>
         </Modal>

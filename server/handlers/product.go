@@ -71,6 +71,17 @@ func (h *handlerProduct) GetAllProduct(c echo.Context) error {
 	return c.JSON(http.StatusOK, resultdto.SuccessResult{Code: http.StatusOK, Data: products})
 }
 
+func (h *handlerProduct) GetProductById(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	product, err := h.ProductRepository.GetProduct(id)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, resultdto.SuccessResult{Code: http.StatusOK, Data: product})
+}
+
 func (h *handlerProduct) UpdateDataProduct(c echo.Context) error {
 	dataImageUpdate := c.Get("dataImage").(string)
 

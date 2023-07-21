@@ -8,14 +8,15 @@ import { API } from '../config/Api';
 function Homes() {
   const [showUpdateProduct, setShowUpdateProduct] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [idProduct, setIdProduct] = useState('');
   const [dataAllProduct, setDataAllProduct] = useState([]);
 
-  const handleOpenUpdateProduct = (index) => {
-    console.log("Clicked Update for index:", index);
+  const handleOpenUpdateProduct = (id) => {
+    console.log("Clicked Update for index:", id);
+    setIdProduct(id);
     setShowUpdateProduct(true);
   };
   
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,25 +31,40 @@ function Homes() {
     fetchData();
   }, []);
 
-  const handleDelete = () => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-      }
-    });
-  };
+const handleDelete = async (productId) => {
+  try {
+    console.log("idnyaaaa", productId);
+    const response = await API.delete(`/product/${productId}`);
+    console.log("delete product success : ", response);
+  } catch (error) {
+    console.log("delete product failed : ", error);
+  }
+};
+
+const handleOpenDeleteProduct = (productId) => {
+  console.log("ini id", productId);
+  Swal.fire({
+    title: 'Apakah Anda yakin?',
+    text: "Tindakan ini akan menghapus file!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya, hapus saja!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      handleDelete(productId);
+      
+      Swal.fire(
+        'Terhapus!',
+        'File Anda telah dihapus.',
+        'success'
+      ).then(() => {
+        window.location.reload();
+      });
+    }
+  })
+};
 
   return (
     <div className='containerCard'>
@@ -73,9 +89,9 @@ function Homes() {
                 </div>
                 <Card.Text>Stok : {item.stok} kendaraan</Card.Text>
                 <div className='action'>
-                  <div className='update' onClick={() => handleOpenUpdateProduct(index)}>Update</div>
-                  <UpdateProduct show={showUpdateProduct} onHide={() => setShowUpdateProduct(false)} selectedIndex={index}/>
-                  <div className='delete' onClick={handleDelete}>Delete</div>
+                  <div className='update' onClick={() => handleOpenUpdateProduct(item.id)}>Update</div>
+                  <UpdateProduct show={showUpdateProduct} onHide={() => setShowUpdateProduct(false)} idProduct={idProduct}/>
+                  <div className='delete' onClick={() => { handleOpenDeleteProduct(item.id) }}>delete</div>
                 </div>
               </Card.Body>
             </Card>

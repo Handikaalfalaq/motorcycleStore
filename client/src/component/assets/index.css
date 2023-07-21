@@ -56,31 +56,31 @@
 }
 
 /* ----------------------------------------Modal Login / register---------------------------------------- */
-.modalLoginBody, .modalRegisterBody {
+.modalLoginBody, .modalRegisterBody, .modalNewProductBody, .modalUpdateProductBody {
     width: 416px;
     height: auto;
     margin: auto;
 }
 
-.modalLoginTitle, .modalRegisterTitle {
+.modalLoginTitle, .modalRegisterTitle, .modalNewProductTitle, .modalUpdateProductTitle {
     font-size: 36px; 
     text-align: center;
     font-weight: bold;
     color: #fe6600;
 }
 
-.modalLoginForm, .modalLoginForm{
+.modalLoginForm, .modalLoginForm, .modalNewProductForm, .modalUpdateProductForm {
     width: 416px;
     margin:auto;
 }
 
-.modalLoginControl, .modalRegisterControl{
+.modalLoginControl, .modalRegisterControl, .modalNewProductControl, .modalUpdateProductControl {
     height: 60px;
     width: 90%; 
     margin-top: 30px;
 }
 
-.modalLoginButton, .modalRegisterButton {
+.modalLoginButton, .modalRegisterButton, .modalNewProductButton, .modalUpdateProductButton {
     height: 60px;
     width: 90%;
     background-color: #fe6600;
@@ -94,7 +94,6 @@
     border: 1px solid #fe6600;
   }
   
-
 .modalLoginButtonHere, .modalRegisterButtonHere {
     border:0px; 
     background-color:transparent; 

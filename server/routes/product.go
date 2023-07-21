@@ -15,6 +15,7 @@ func ProductRouter(e *echo.Group) {
 
 	e.POST("/product", middleware.UploadFile(h.CreateNewProduct))
 	e.GET("/products", h.GetAllProduct)
+	e.GET("/product/:id", h.GetProductById)
 	e.PATCH("/product/:id", middleware.UploadFile(h.UpdateDataProduct))
 	e.DELETE("/product/:id", h.DeleteDataProduct)
 }
