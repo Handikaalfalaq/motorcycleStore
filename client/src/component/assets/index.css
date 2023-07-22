@@ -60,6 +60,24 @@
     color:#fe6600;
 }
 
+.pagination{
+    margin: 10px 0px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    text-shadow:
+        -1px -1px 0 #fe6600,
+        1px -1px 0 #fe6600,
+        -1px 1px 0 #fe6600,
+        1px 1px 0 #fe6600;
+    cursor: pointer;
+}
+
+
 /* ----------------------------------------Modal Login / register---------------------------------------- */
 .modalLoginBody, .modalRegisterBody, .modalNewProductBody, .modalUpdateProductBody {
     width: 416px;
@@ -130,14 +148,13 @@
     display: flex;
     height: 40px;
     cursor: pointer;
-}
-
-.logoPlus{
-    width: 40px;
+    width: auto;
     color: white;
     background-color: #fe6600;
-    border-radius: 10px 0px 0px 10px;
-    font-size: 30px;
+    border: 4px solid #fe6600;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 20px;
     font-weight: bold;
     display: flex;
     text-align: center;
@@ -145,17 +162,10 @@
     justify-content: center;
 }
 
-.plusProduct{
-    font-size: 15px;
-    color: white;
-    background-color: #fe6600;
-    border-radius: 0px 10px 10px 0px;
-    padding: 5px 10px 5px 0px;
-    font-weight: bold;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+.buttonPlusProduct:hover {
+    color: #fe6600;
+    border: 4px solid #fe6600;
+    background-color: white;
 }
 
 .login, .register, .logOut {

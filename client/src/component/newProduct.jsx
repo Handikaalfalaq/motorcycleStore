@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { React, useState } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useMutation } from 'react-query';
@@ -46,10 +47,9 @@ function NewProduct({ show, onHide }) {
       Swal.showLoading();
 
       const response = await API.post('/product', formData, config);
-      console.log("add product success : ", response);
-      console.log("data : ", formData);
       
       Swal.hideLoading();
+      onHide()
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -71,24 +71,24 @@ function NewProduct({ show, onHide }) {
         <Modal.Title className='modalNewProductTitle'>Tambah Product</Modal.Title>
         <Form className='modalNewProductForm' onSubmit={(e) => handleSubmit.mutate(e)}>
           <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" />
+            <Form.Control className='modalNewProductControl' name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" required/>
           </Form.Group>
 
           <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="hargaBeli" onChange={handleChange} type="number" placeholder="Harga Beli ('42.6 jt')" />
+            <Form.Control className='modalNewProductControl' name="hargaBeli" onChange={handleChange} type="number" placeholder="Harga Beli ('42.6 jt')" required/>
           </Form.Group>
 
           <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="hargaJual" onChange={handleChange} type="number" placeholder="Harga Jual ('54.3 jt')" />
+            <Form.Control className='modalNewProductControl' name="hargaJual" onChange={handleChange} type="number" placeholder="Harga Jual ('54.3 jt')" required/>
           </Form.Group>
 
           <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="stok" onChange={handleChange} type="number" placeholder="Stok Motor" />
+            <Form.Control className='modalNewProductControl' name="stok" onChange={handleChange} type="number" placeholder="Stok Motor" required/>
           </Form.Group>
 
           <Form.Group className="mb-3">
             <label>Pilih image, size max 100kb (jpg, png)</label>
-            <Form.Control className='modalNewProductControl' name="image" onChange={handleChange} type="file" accept=".jpg, .png" />
+            <Form.Control className='modalNewProductControl' name="image" onChange={handleChange} type="file" accept=".jpg, .png" required/>
           </Form.Group>
 
           <button className='modalNewProductButton'>Tambah Product</button>

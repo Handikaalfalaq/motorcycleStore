@@ -73,6 +73,7 @@ function UpdateProduct({show, onHide, idProduct }) {
           console.log("data : ", formData);
           
           Swal.hideLoading();
+          onHide()
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -88,35 +89,6 @@ function UpdateProduct({show, onHide, idProduct }) {
         }
       });
 
-    // const handleSubmit = useMutation(async (e) => {
-    //   try {
-    //     console.log("berhasil")
-    //     e.preventDefault();
-
-    //     const config = {
-    //       headers: {
-    //         'Content-type': 'multipart/form-data',
-    //       },
-    //     };
-
-    //     const formData = new FormData();
-    //     formData.set('namaMotor', formUpdateProduct.namaMotor);
-    //     formData.set('hargaBeli', formUpdateProduct.hargaBeli);
-    //     formData.set('hargaJual', formUpdateProduct.hargaJual);
-    //     formData.set('stok', formUpdateProduct.stok);
-    //     formData.append('image', formUpdateProduct.image[0], formUpdateProduct.image[0].name);
-        
-    //     const response = await API.patch(`/product/${idProduct}`, formData, config);
-    //     console.log("add product success : ", response);
-    //     console.log("data : ", formData);
-  
-    //   } catch (error) { 
-    //     console.log("gagal")
-    //     console.log("add product failed : ", error);
-    //   }
-    // });
-
-
     return(
         <Modal show={show} onHide={onHide}>  
             <Modal.Body className='modalUpdateProductBody'>
@@ -124,26 +96,26 @@ function UpdateProduct({show, onHide, idProduct }) {
                 <Form className='modalUpdateProductForm' onSubmit={(e) => handleSubmit.mutate(e)}>
                     <Form.Group className="mb-3" >
                     <label>Harga Beli ('42.6 jt')</label>
-                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.namaMotor} name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.namaMotor} name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
                       <label>Harga Beli ('42.6 jt')</label>
-                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaBeli} name="hargaBeli" onChange={handleChange} type="number" placeholder="Harga Beli" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaBeli} name="hargaBeli" onChange={handleChange} type="number" placeholder="Harga Beli"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
                       <label>Harga Jual ('54.3 jt')</label>
-                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaJual} name="hargaJual" onChange={handleChange} type="number" placeholder="Harga Jual" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaJual} name="hargaJual" onChange={handleChange} type="number" placeholder="Harga Jual"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
-                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.stok} name="stok" onChange={handleChange} type="number" placeholder="Stok Motor" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.stok} name="stok" onChange={handleChange} type="number" placeholder="Stok Motor"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                       <label>Pilih image, size max 100kb (jpg, png)</label>
-                      <Form.Control className='modalUpdateProductControl' name="image" onChange={handleChange} type="file" accept=".jpg, .png"/>
+                      <Form.Control className='modalUpdateProductControl' name="image" onChange={handleChange} type="file" accept=".jpg, .png" required/>
                     </Form.Group>
 
                     <button className='modalUpdateProductButton' type="submit">Update Product</button>
