@@ -5,6 +5,7 @@ import (
 	"ktm_store/database"
 	postgres "ktm_store/pkg/database"
 	"ktm_store/routes"
+	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -25,6 +26,7 @@ func main() {
 	database.RunMigration()
 
 	routes.RouteInit(e.Group("/ktmstore/api/v1"))
+	PORT := os.Getenv("PORT")
 	fmt.Println("server running localhost:5000")
-	e.Logger.Fatal(e.Start("localhost:5000"))
+	e.Logger.Fatal(e.Start(":" + PORT))
 }
