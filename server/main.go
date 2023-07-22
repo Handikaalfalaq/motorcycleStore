@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"ktm_store/database"
-	mysql "ktm_store/pkg/database"
+	postgres "ktm_store/pkg/database"
 	"ktm_store/routes"
 
 	"github.com/joho/godotenv"
@@ -21,7 +21,7 @@ func main() {
 		AllowHeaders: []string{"X-Requested-With", "Content-Type", "Authorization", echo.HeaderOrigin, echo.HeaderAccept},
 	}))
 
-	mysql.DatabaseConnection()
+	postgres.DatabaseConnection()
 	database.RunMigration()
 
 	routes.RouteInit(e.Group("/ktmstore/api/v1"))

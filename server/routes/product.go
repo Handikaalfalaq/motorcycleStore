@@ -2,7 +2,7 @@ package routes
 
 import (
 	"ktm_store/handlers"
-	mysql "ktm_store/pkg/database"
+	postgres "ktm_store/pkg/database"
 	"ktm_store/pkg/middleware"
 	"ktm_store/repositories"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func ProductRouter(e *echo.Group) {
-	productRepository := repositories.RepositoryProduct(mysql.DB)
+	productRepository := repositories.RepositoryProduct(postgres.DB)
 	h := handlers.HandlerProduct(productRepository)
 
 	e.POST("/product", middleware.UploadFile(h.CreateNewProduct))

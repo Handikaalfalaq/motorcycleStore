@@ -2,7 +2,7 @@ package routes
 
 import (
 	"ktm_store/handlers"
-	mysql "ktm_store/pkg/database"
+	postgres "ktm_store/pkg/database"
 	"ktm_store/pkg/middleware"
 	"ktm_store/repositories"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func AutRoutes(e *echo.Group) {
-	authRepository := repositories.RepositoryAuth(mysql.DB)
+	authRepository := repositories.RepositoryAuth(postgres.DB)
 	h := handlers.HandlerAuth(authRepository)
 
 	e.POST("/register", h.Register)

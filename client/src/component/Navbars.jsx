@@ -56,7 +56,7 @@ function Navbars() {
   return (
     <Navbar expand="lg" className="bg-secondary">
       <Container fluid>
-        <Navbar.Brand href="#"><img src={FolderImg.LogoKtm} alt="icon" className='logoNavbar'/></Navbar.Brand>
+        <Navbar.Brand><img src={FolderImg.LogoKtm} alt="icon" className='logoNavbar'/></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
         <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll></Nav>
