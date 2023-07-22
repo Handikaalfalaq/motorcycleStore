@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { API } from '../config/Api';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
+import { Form} from "react-bootstrap"; 
 
 function Homes() {
   const [state] = useContext(UserContext);
@@ -15,9 +16,10 @@ function Homes() {
   const [dataAllProduct, setDataAllProduct] = useState([]);
   const [posisiPage, setPosisiPage] = useState(1);
   const dataPerPage = 9;
+  const [searchValue, setSearchValue] = useState('');
+  const [filteredData, setFilteredData] = useState(0);
 
   const handleOpenUpdateProduct = (id) => {
-    console.log("Clicked Update for index:", id);
     setIdProduct(id);
     setShowUpdateProduct(true);
   };
@@ -47,7 +49,6 @@ const handleDelete = async (productId) => {
 };
 
   const handleOpenDeleteProduct = (productId) => {
-    console.log("ini id", productId);
     Swal.fire({
       title: 'Apakah Anda yakin?',
       text: "Tindakan ini akan menghapus file!",
@@ -71,12 +72,28 @@ const handleDelete = async (productId) => {
     })
   };
 
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+
+    const filteredData = dataAllProduct.filter((item) =>
+      item.namaMotor.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    setFilteredData(filteredData);
+  };
+
+  const renderData = filteredData.length > 0 ? filteredData : dataAllProduct;
+  
   const indexDataTerakhir = posisiPage * dataPerPage;
   const indexDataPertama = indexDataTerakhir - dataPerPage;
-  const dataDitampilkan = dataAllProduct.slice(indexDataPertama, indexDataTerakhir);
+  const dataDitampilkan = renderData.slice(indexDataPertama, indexDataTerakhir);
 
   const nomorPage = [];
-  for (let i = 1; i <= Math.ceil(dataAllProduct.length / dataPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(renderData.length / dataPerPage); i++) {
     nomorPage.push(i);
   }
 
@@ -96,59 +113,71 @@ const handleDelete = async (productId) => {
     }
   };
 
+
   return (
     <>
+      <Form className="searchHome d-flex" onSubmit={handleSearchSubmit}>
+        <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" value={searchValue} onChange={handleSearchChange}/>
+        <div className='buttonSearch' onClick={handleSearchSubmit}>Search</div>
+      </Form>
       <div className='containerCard'>
-        {isLoading ? (
-          <div></div>
-        ) : (
-          dataDitampilkan.length > 0 ? (
-            dataDitampilkan.map((item, index) => (
-              <Card className="cardHome" key={index}>
-                <div className='imageProduct' style={{backgroundImage: `url(${item.image})`}}></div>
-                <Card.Body>
-                  <Card.Title>{item.namaMotor}</Card.Title>
-                  <div className="transaction">
-                    <div>
-                      <div className="infoPurchasePrice">Harga Beli</div>
-                      <div className="purchasePrice">Rp. {item.hargaBeli}</div>
-                    </div>
-                    <div>
-                      <div className="infoSellingPrice">Harga Jual</div>
-                      <div className="sellingPrice">Rp. {item.hargaJual}</div>
-                    </div>
+    {isLoading ? (
+      <div></div>
+    ) : (
+        dataDitampilkan.length > 0 ? (
+          dataDitampilkan.map((item, index) => (
+            <Card className="cardHome" key={index}>
+              <div className='imageProduct' style={{backgroundImage: `url(${item.image})`}} ></div>
+              <Card.Body>
+                <Card.Title>{item.namaMotor}</Card.Title>
+                <div className="transaction">
+                  <div>
+                    <div className="infoPurchasePrice">Harga Beli</div>
+                    <div className="purchasePrice">Rp. {item.hargaBeli/1000000} jt</div>
                   </div>
-                  <div className='stok'>Stok : {item.stok} kendaraan</div>
+                  <div>
+                    <div className="infoSellingPrice">Harga Jual</div>
+                    <div className="sellingPrice">Rp. {item.hargaJual/1000000} jt</div>
+                  </div>
+                </div>
+                <div className='stok'>Stok : {item.stok} kendaraan</div>
 
-                  {state.user.role === 'admin' ? (
-                    <div className='action'>
+                {state.user.role === 'admin' && (
+                  <div className='action'>
                     <div className='update' onClick={() => handleOpenUpdateProduct(item.id)}>Update</div>
-                    <UpdateProduct show={showUpdateProduct} onHide={() => setShowUpdateProduct(false)} idProduct={idProduct}/>
                     <div className='delete' onClick={() => { handleOpenDeleteProduct(item.id) }}>delete</div>
                   </div>
-                  ) : (
-                    <div> </div>
-                  )}
-                </Card.Body>
-              </Card>
-            ))
-          ) : (
-            <div>No products found.</div>
-          )
-        )}
-        
-      </div>
-      
+                )}
+              </Card.Body>
+            </Card>
+          ))
+        ) : (
+          <div>No products found.</div>
+        )
+    )}
+    </div>
+
+    <UpdateProduct show={showUpdateProduct} onHide={() => setShowUpdateProduct(false)} idProduct={idProduct}/>
+
+    {nomorPage.length === 1 ? (
+  <div></div>
+    ) : (
       <div className="pagination">
         {posisiPage > 1 && <div onClick={handlePreviousPageClick}> &lt; </div>}
         {nomorPage.map((number) => (
-          <div key={number} onClick={() => handlePageClick(number)} className={number === posisiPage ? "active" : ""} style={number === posisiPage ? { color: "#fe6600" } : {}}>
-          {number}
-        </div>
-        
+          <div
+            key={number}
+            onClick={() => handlePageClick(number)}
+            className={number === posisiPage ? "active" : ""}
+            style={number === posisiPage ? { color: "#fe6600" } : {}}
+          >
+            {number}
+          </div>
         ))}
         {posisiPage < nomorPage.length && <div onClick={handleNextPageClick}> &gt; </div>}
       </div>
+    )}
+
     </>
   );
 }

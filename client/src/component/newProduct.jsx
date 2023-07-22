@@ -69,27 +69,31 @@ function NewProduct({ show, onHide }) {
     <Modal show={show} onHide={onHide}>
       <Modal.Body className='modalNewProductBody'>
         <Modal.Title className='modalNewProductTitle'>Tambah Product</Modal.Title>
-        <Form className='modalNewProductForm' onSubmit={(e) => handleSubmit.mutate(e)}>
-          <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" required/>
-          </Form.Group>
+        <Form className='modalUpdateProductForm' onSubmit={(e) => handleSubmit.mutate(e)}>
+                    <Form.Group >
+                    <label className='labelForm'>Nama Motor</label>
+                      <Form.Control className='modalUpdateProductControl' name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" required/>
+                    </Form.Group>
 
-          <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="hargaBeli" onChange={handleChange} type="number" placeholder="Harga Beli ('42.6 jt')" required/>
-          </Form.Group>
+                    <Form.Group  >
+                      <label className='labelForm'>Harga Beli</label>
+                      <Form.Control className='modalUpdateProductControl' name="hargaBeli" onChange={handleChange} type="number" placeholder="contoh : 42.6 jt"  required/>
+                    </Form.Group>
 
-          <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="hargaJual" onChange={handleChange} type="number" placeholder="Harga Jual ('54.3 jt')" required/>
-          </Form.Group>
+                    <Form.Group  >
+                      <label className='labelForm'>Harga Jual</label>
+                      <Form.Control className='modalUpdateProductControl' name="hargaJual" onChange={handleChange} type="number" placeholder="contoh : 54.3 jt"  required/>
+                    </Form.Group>
 
-          <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="stok" onChange={handleChange} type="number" placeholder="Stok Motor" required/>
-          </Form.Group>
+                    <Form.Group  >
+                    <label className='labelForm'>Stok Motor</label>
+                      <Form.Control className='modalUpdateProductControl' name="stok" onChange={handleChange} type="number" placeholder="contoh : 5"  required/>
+                    </Form.Group>
 
-          <Form.Group className="mb-3">
-            <label>Pilih image, size max 100kb (jpg, png)</label>
-            <Form.Control className='modalNewProductControl' name="image" onChange={handleChange} type="file" accept=".jpg, .png" required/>
-          </Form.Group>
+                    <Form.Group >
+                      <label className='labelForm'>Pilih image, size max 100kb (jpg, png)</label>
+                      <Form.Control className='modalUpdateProductImage' name="image" onChange={handleChange} type="file" accept=".jpg, .png" required/>
+                    </Form.Group>
 
           <button className='modalNewProductButton'>Tambah Product</button>
         </Form>

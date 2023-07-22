@@ -1,11 +1,10 @@
 package middleware
 
 import (
-	"fmt"
-	"net/http"
-	"strings"
 	dto "ktm_store/dto/result"
 	jwtToken "ktm_store/pkg/jwt"
+	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -28,8 +27,6 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 
 		token = strings.Split(token, " ")[1]
 		claims, err := jwtToken.DecodeToken(token)
-		fmt.Println("ini token", token)
-		fmt.Println("ini claims", claims)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, Result{Code: http.StatusUnauthorized, Message: "unathorized"})
 		}

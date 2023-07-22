@@ -1,6 +1,6 @@
 import {React, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Container, Form, Nav, Navbar} from "react-bootstrap"; 
+import { Container,  Navbar, Nav} from "react-bootstrap"; 
 import "../component/assets/index.css";
 import FolderImg from "../component/assets/img/folderImg"
 import ModalLogin from './auth/ModalLogin'
@@ -15,7 +15,6 @@ function Navbars() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showNewProduct, setShowNewProduct] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
 
   
   const handleOpenLogin = () => setShowLogin(true);
@@ -53,14 +52,6 @@ function Navbars() {
       }
     })
   }
-
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-  };
   
   return (
     <Navbar expand="lg" className="bg-secondary">
@@ -68,12 +59,7 @@ function Navbars() {
         <Navbar.Brand href="#"><img src={FolderImg.LogoKtm} alt="icon" className='logoNavbar'/></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-          <Form className="d-flex" onSubmit={handleSearchSubmit}>
-            <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" value={searchValue} onChange={handleSearchChange}/>
-            <div className='buttonSearch' onClick={handleSearchSubmit}>Search</div>
-          </Form>
-          </Nav>
+        <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll></Nav>
 
           {state.user.role === "admin" ? (
             <nav className="buttonPlusProduct me-auto" onClick={handleOpenNewProduct}>+ Tambah Product </nav>  

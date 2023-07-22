@@ -48,7 +48,7 @@ function ModalRegister({show, onHide, hereLogin}) {
           } catch (error) {
             const alert = (
               <Alert variant="danger" className="py-1">
-                Failed to register!
+                email sudah terdaftar!
               </Alert>
             );
             setMessage(alert);

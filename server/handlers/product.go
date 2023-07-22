@@ -41,14 +41,32 @@ func (h *handlerProduct) CreateNewProduct(c echo.Context) error {
 			Message: err.Error()})
 	}
 
-	// price, _ := strconv.Atoi(c.FormValue("price"))
+	HargaJual, err := strconv.Atoi(c.FormValue("hargaJual"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
+			Code:    http.StatusBadRequest,
+			Message: "Harga jual harus berupa angka"})
+	}
+
+	HargaBeli, err := strconv.Atoi(c.FormValue("hargaBeli"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
+			Code:    http.StatusBadRequest,
+			Message: "Harga beli harus berupa angka"})
+	}
+
+	Stok, err := strconv.Atoi(c.FormValue("stok"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
+			Code:    http.StatusBadRequest,
+			Message: "Stok harus berupa angka"})
+	}
 
 	product := models.Product{
 		NamaMotor: c.FormValue("namaMotor"),
-		Informasi: c.FormValue("informasi"),
-		HargaJual: c.FormValue("hargaJual"),
-		HargaBeli: c.FormValue("hargaBeli"),
-		Stok:      c.FormValue("stok"),
+		HargaJual: HargaJual,
+		HargaBeli: HargaBeli,
+		Stok:      Stok,
 		Image:     dataImage,
 	}
 
@@ -97,23 +115,36 @@ func (h *handlerProduct) UpdateDataProduct(c echo.Context) error {
 		product.NamaMotor = namaMotor
 	}
 
-	var informasi = c.FormValue("informasi")
-	if informasi != "" {
-		product.Informasi = informasi
-	}
-
-	var hargaJual = c.FormValue("hargaJual")
-	if hargaJual != "" {
+	var hargaJualStr = c.FormValue("hargaJual")
+	if hargaJualStr != "" {
+		hargaJual, err := strconv.Atoi(hargaJualStr)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
+				Code:    http.StatusBadRequest,
+				Message: "Harga jual harus berupa angka"})
+			}
 		product.HargaJual = hargaJual
 	}
 
-	var hargaBeli = c.FormValue("hargaBeli")
-	if hargaBeli != "" {
+	var hargaBeliStr = c.FormValue("hargaBeli")
+	if hargaBeliStr != "" {
+		hargaBeli, err := strconv.Atoi(hargaBeliStr)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
+				Code:    http.StatusBadRequest,
+				Message: "Harga Beli harus berupa angka"})
+			}
 		product.HargaBeli = hargaBeli
 	}
 
-	var stok = c.FormValue("stok")
-	if stok != "" {
+	var stokStr = c.FormValue("stok")
+	if stokStr != "" {
+		stok, err := strconv.Atoi(stokStr)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
+				Code:    http.StatusBadRequest,
+				Message: "Harga Beli harus berupa angka"})
+			}
 		product.Stok = stok
 	}
 
@@ -150,7 +181,6 @@ func convertResponseProduct(u models.Product) productdto.ProductResponse {
 	return productdto.ProductResponse{
 		Id:        u.Id,
 		NamaMotor: u.NamaMotor,
-		Informasi: u.Informasi,
 		HargaBeli: u.HargaJual,
 		HargaJual: u.HargaBeli,
 		Stok:      u.HargaBeli,

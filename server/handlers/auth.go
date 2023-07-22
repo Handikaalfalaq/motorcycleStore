@@ -67,13 +67,11 @@ func (h *handlerAuth) Login(c echo.Context) error {
 		Password: c.FormValue("password"),
 	}
 
-	// Check email
 	user, err := h.AuthRepository.Login(user.Email)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
 
-	// Check password
 	isValid := bcrypt.CheckPasswordHash(request.Password, user.Password)
 	if !isValid {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: "wrong email or password"})
