@@ -34,6 +34,11 @@
     color:green
 }
 
+.stok{
+    color:black;
+    margin: 10px 0px;
+}
+
 .action {
     display: flex;
     justify-content: space-around;
@@ -153,7 +158,7 @@
     justify-content: center;
 }
 
-.login, .register {
+.login, .register, .logOut {
     color: white;
     margin: 10px;
     border: 2px solid #fe6600;
@@ -170,16 +175,20 @@
     background-color: white;
 }
 
-.register {
+.register, .logOut {
     border: 2px solid #fe6600;
     color: #fe6600;
     background-color: white;
 }
 
-.register:hover{
+.register:hover , .logOut:hover{
     color: white;
     border: 2px solid #fe6600;
     background-color: #fe6600;
 }
 
-
+.fullNameLogin {
+    color: #fe6600;
+    font-size: 20px;
+    font-weight: 500;
+}

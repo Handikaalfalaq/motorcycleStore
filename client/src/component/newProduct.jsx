@@ -35,8 +35,14 @@ function NewProduct({ show, onHide }) {
       formData.set('hargaBeli', formProduct.hargaBeli);
       formData.set('hargaJual', formProduct.hargaJual);
       formData.set('stok', formProduct.stok);
-      formData.append('image', formProduct.image[0], formProduct.image[0].name);
 
+      if (formProduct.image[0] && formProduct.image[0].size > 100 * 1024) {
+        alert('Ukuran file gambar tidak boleh lebih dari 100 KB.');
+        return;
+      }
+  
+      formData.append('image', formProduct.image[0], formProduct.image[0].name);
+  
       Swal.showLoading();
 
       const response = await API.post('/product', formData, config);
@@ -49,7 +55,7 @@ function NewProduct({ show, onHide }) {
         icon: 'success',
         title: 'Product Baru Berhasil Ditambahkan',
         showConfirmButton: false,
-        timer: 1500
+        timer: 3000
       }).then(() => {
         window.location.reload();
       });
@@ -69,20 +75,20 @@ function NewProduct({ show, onHide }) {
           </Form.Group>
 
           <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="hargaBeli" onChange={handleChange} type="text" placeholder="Harga Beli" />
+            <Form.Control className='modalNewProductControl' name="hargaBeli" onChange={handleChange} type="number" placeholder="Harga Beli ('42.6 jt')" />
           </Form.Group>
 
           <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="hargaJual" onChange={handleChange} type="text" placeholder="Harga Jual" />
+            <Form.Control className='modalNewProductControl' name="hargaJual" onChange={handleChange} type="number" placeholder="Harga Jual ('54.3 jt')" />
           </Form.Group>
 
           <Form.Group className="mb-3" >
-            <Form.Control className='modalNewProductControl' name="stok" onChange={handleChange} type="text" placeholder="Stok Motor" />
+            <Form.Control className='modalNewProductControl' name="stok" onChange={handleChange} type="number" placeholder="Stok Motor" />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <label>Pilih image</label>
-            <Form.Control className='modalNewProductControl' name="image" onChange={handleChange} type="file" />
+            <label>Pilih image, size max 100kb (jpg, png)</label>
+            <Form.Control className='modalNewProductControl' name="image" onChange={handleChange} type="file" accept=".jpg, .png" />
           </Form.Group>
 
           <button className='modalNewProductButton'>Tambah Product</button>

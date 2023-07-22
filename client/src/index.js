@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { UserContextProvider } from './context/UserContext';
 
-
 const client = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,5 +18,4 @@ root.render(
       </QueryClientProvider>
     </UserContextProvider>
   </React.StrictMode>
-  // document.getElementById('root')
 );

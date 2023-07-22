@@ -6,8 +6,12 @@ import FolderImg from "../component/assets/img/folderImg"
 import ModalLogin from './auth/ModalLogin'
 import ModalRegister from './auth/ModalRegister'
 import NewProduct from './newProduct'
+import { UserContext } from '../context/UserContext';
+import { useContext } from 'react';
+import Swal from 'sweetalert2';
 
 function Navbars() {
+  const [state, dispatch] = useContext(UserContext);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showNewProduct, setShowNewProduct] = useState(false);
@@ -28,6 +32,27 @@ function Navbars() {
     setShowRegister(true)
   }
 
+  const logout = () => {
+    Swal.fire({
+      title: 'Apakah Anda akan Logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Logout!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({
+          type: "LOGOUT"
+        })
+        Swal.fire(
+          'Berhasil Logout!',
+        )
+      }
+    })
+    
+}
+
   return (
     <Navbar expand="lg" className="bg-secondary">
       <Container fluid>
@@ -37,17 +62,31 @@ function Navbars() {
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
             <Form className="d-flex">
               <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search"/>
-              <div className='buttonSearch'>Search</div>
+              <div className='buttonSearch'>Search Motor</div>
             </Form>
           </Nav>
 
-          <nav className="buttonPlusProduct me-auto" onClick={handleOpenNewProduct}>
+          {state.user.role === "admin" ? (
+            <nav className="buttonPlusProduct me-auto" onClick={handleOpenNewProduct}>
               <div className="logoPlus"> + </div>
               <div className="plusProduct">Tambah Product</div>
-          </nav>
+            </nav>  
+          ) : (
+            <div></div>
+          )}
           
-          <div className='login' onClick={handleOpenLogin}>Login</div>
-          <div className='register' onClick={handleOpenRegister}>Register</div>
+          {state.isLogin ? (
+            <>
+              <div className='fullNameLogin'>hallo... {state.user.fullName.split(' ')[0]}</div>
+              <div className='logOut' onClick= { () => logout()}>logout</div>
+            </>
+          ) : (
+            <>
+              <div className='login' onClick={handleOpenLogin}>Login</div>
+              <div className='register' onClick={handleOpenRegister}>Register</div>
+            </>
+          )}
+
         </Navbar.Collapse>
 
         <ModalLogin show={showLogin} onHide={()=> setShowLogin(false)} hereRegister={hereRegister} />

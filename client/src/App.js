@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Navbars from "./component/Navbars";
 import Index from "./pages/Index";
 import {Route, Routes, redirect} from "react-router-dom"

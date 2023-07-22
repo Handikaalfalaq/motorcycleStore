@@ -59,6 +59,11 @@ function UpdateProduct({show, onHide, idProduct }) {
           formData.set('hargaBeli', formUpdateProduct.hargaBeli);
           formData.set('hargaJual', formUpdateProduct.hargaJual);
           formData.set('stok', formUpdateProduct.stok);
+          if (formUpdateProduct.image[0] && formUpdateProduct.image[0].size > 100 * 1024) {
+            alert('Ukuran file gambar tidak boleh lebih dari 100 KB.');
+            return;
+          }
+      
           formData.append('image', formUpdateProduct.image[0], formUpdateProduct.image[0].name);
     
           Swal.showLoading();
@@ -118,24 +123,27 @@ function UpdateProduct({show, onHide, idProduct }) {
                 <Modal.Title className='modalUpdateProductTitle'>Update Product</Modal.Title>
                 <Form className='modalUpdateProductForm' onSubmit={(e) => handleSubmit.mutate(e)}>
                     <Form.Group className="mb-3" >
-                    <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.namaMotor} name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" />
+                    <label>Harga Beli ('42.6 jt')</label>
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.namaMotor} name="namaMotor" onChange={handleChange} type="text" placeholder="Nama Motor" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
-                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaBeli} name="hargaBeli" onChange={handleChange} type="text" placeholder="Harga Beli" />
+                      <label>Harga Beli ('42.6 jt')</label>
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaBeli} name="hargaBeli" onChange={handleChange} type="number" placeholder="Harga Beli" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
-                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaJual} name="hargaJual" onChange={handleChange} type="text" placeholder="Harga Jual" />
+                      <label>Harga Jual ('54.3 jt')</label>
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.hargaJual} name="hargaJual" onChange={handleChange} type="number" placeholder="Harga Jual" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" >
-                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.stok} name="stok" onChange={handleChange} type="text" placeholder="Stok Motor" />
+                      <Form.Control className='modalUpdateProductControl' value={formUpdateProduct.stok} name="stok" onChange={handleChange} type="number" placeholder="Stok Motor" />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <label>Pilih image</label>
-                      <Form.Control className='modalUpdateProductControl' name="image" onChange={handleChange} type="file" />
+                      <label>Pilih image, size max 100kb (jpg, png)</label>
+                      <Form.Control className='modalUpdateProductControl' name="image" onChange={handleChange} type="file" accept=".jpg, .png"/>
                     </Form.Group>
 
                     <button className='modalUpdateProductButton' type="submit">Update Product</button>

@@ -4,8 +4,11 @@ import "../component/assets/index.css";
 import UpdateProduct from './updateProduct';
 import Swal from 'sweetalert2';
 import { API } from '../config/Api';
+import { UserContext } from '../context/UserContext';
+import { useContext } from 'react';
 
 function Homes() {
+  const [state] = useContext(UserContext);
   const [showUpdateProduct, setShowUpdateProduct] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [idProduct, setIdProduct] = useState('');
@@ -78,21 +81,28 @@ const handleOpenDeleteProduct = (productId) => {
               <Card.Body>
                 <Card.Title>{item.namaMotor}</Card.Title>
                 <div className="transaction">
-                  <Card.Text>
+                  <div>
                     <div className="infoPurchasePrice">Harga Beli</div>
                     <div className="purchasePrice">Rp. {item.hargaBeli}</div>
-                  </Card.Text>
-                  <Card.Text>
+                  </div>
+                  <div>
                     <div className="infoSellingPrice">Harga Jual</div>
                     <div className="sellingPrice">Rp. {item.hargaJual}</div>
-                  </Card.Text>
+                  </div>
                 </div>
-                <Card.Text>Stok : {item.stok} kendaraan</Card.Text>
-                <div className='action'>
+                <div className='stok'>Stok : {item.stok} kendaraan</div>
+
+                {state.user.role === 'admin' ? (
+                  <div className='action'>
                   <div className='update' onClick={() => handleOpenUpdateProduct(item.id)}>Update</div>
                   <UpdateProduct show={showUpdateProduct} onHide={() => setShowUpdateProduct(false)} idProduct={idProduct}/>
                   <div className='delete' onClick={() => { handleOpenDeleteProduct(item.id) }}>delete</div>
                 </div>
+                ) : (
+                  <div> </div>
+                )}
+                
+
               </Card.Body>
             </Card>
           ))
